@@ -12,7 +12,9 @@ $(".loadData").on("click",function () {
     apiManager.getRandomQuote();
     apiManager.getRandomPoke();
     apiManager.getRandomText();
+    
   })
-$(".disData").on("click", function () {
+$(".DisData").on("click", function () {
+  
     r.render(apiManager.getData())
   })

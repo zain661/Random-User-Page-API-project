@@ -1,53 +1,70 @@
-
 class Renderer {
-   constructor(data){
-        this.render(data)
-     }
-     render(data){
-        this.userSource = $(".user-template").html();
-        this.userTemplate = Handlebars.compile(this.userSource);
-        const newHtml = this.userTemplate({data});
-        this.$(".user-container").append(html);
-    
-        this.quoteSource = $(".quote-template").html();
-        this.quoteTemplate = Handlebars.compile(this.quoteSource);
-        const newHtml2 = this.quoteTemplate({data});
-        this.$(".quote-container").append(html);
-    
-        this.pokeSource = $(".poke-template").html();
-        this.pokeTemplate = Handlebars.compile(this.pokeSource);
-        const newHtml3 = this.pokeTemplate({data});
-        this.$(".poke-container").append(html);
-    
-        this.abouteMeSource = $(".abouteMe-template").html();
-        this.aboutMeTemplate = Handlebars.compile(this.abouteMeSource);
-        const newHtml4 = this.abouteMeTemplate({data});
-        this.$(".aboutMe-container").append(html);
-    
-        this.friendsSource = $(".friends-template").html();
-        this.friendsTemplate = Handlebars.compile(this.friendsSource);
-        const newHtml5 = this.feiendsTemplate({friend : data.otherUsers});
-        this.$(".friends-container").append(html);
-          
-       }
+  constructor() {
+      this.elements = {
+      userContainer: $(".user-container"),
+      quoteContainer: $(".quote-container"),
+      pokeContainer: $(".poke-container"),
+      aboutMeContainer: $(".aboutMe-container"),
+      friendsContainer: $(".friends-container"),
+    };
+
+    this.sources = {
+      userSource: $("#user-template").html(),
+      quoteSource: $("#quote-template").html(),
+      pokeSource: $("#poke-template").html(),
+      abouteMeSource: $("#abouteMe-template").html(),
+      friendsSource: $("#friends-template").html(),
+    };
+
+    this.templates = {
+      user: Handlebars.compile($("#user-template").html()),
+      quote: Handlebars.compile(this.sources.quoteSource),
+      poke:  Handlebars.compile(this.sources.pokeSource),
+      about:  Handlebars.compile(this.sources.aboutMeSource),
+      friends:  Handlebars.compile(this.sources.friendsSource)
+    };
   }
 
-// const g = function(data){
-// //  let t = data.results[0].gender
-// //  console.log(t)
-// //  const source = $("#store-template").html();
-// //  const template = Handlebars.compile(source);
-// //  const newHTML = template({data:data})
-// //  console.log(newHTML);
-// let x=data.results[0].picture.large;
-// let y= data.results[0].name.first
-// let y1= data.results[0].name.last
-// let y2 = data.results[0].location.state
-// let y3 = data.results[0].location.city
-//  $(".user-container").append(`<img src='${x}'>`)
-//  $(".user-container").append(`<span> ${y}</span>`)
-//  $(".user-container").append(`<span> ${y1}</span>`)
-//  $(".user-container").append(`<p> ${y2}</p>`)
-//  $(".user-container").append(`<span> ${y3}</span>`)
+  render(data) {
+    console.log(data);
+    this.renderUser(data.user);
+    this.renderQuote(data.quote);
+    this.renderPoke(data.poke);
+    this.renderAbout(data.text);
+    this.renderFriends(data.friends);
+  }
 
- 
+  renderUser(user) {
+    const newHtml = this.templates.user(user);
+    this.elements.userContainer.empty();
+    this.elements.userContainer.append(newHtml);
+  }
+
+  renderQuote(data) {
+    const quoteTemplate = this.templates.quote
+    const newHtml2 = quoteTemplate(data);
+    this.elements.quoteContainer.empty();
+    this.elements.quoteContainer.append(newHtml2);
+  }
+
+  renderPoke(data) {
+    const pokeTemplate =this.templates.poke
+    const newHtml3 = pokeTemplate(data);
+    this.elements.pokeContainer.empty();
+    this.elements.pokeContainer.append(newHtml3);
+  }
+
+  renderAbout(data) {
+    const aboutMeTemplate = this.templates.about
+    const newHtml4 = abouteMeTemplate(data);
+    this.elements.aboutMeContainer.empty();
+    this.elements.aboutMeContainer.append(newHtml4);
+  }
+
+  renderFriends(data) {
+    const friendsTemplate = this.templates.friends
+    const newHtml5 = feiendsTemplate({ friend: data.otherUsers });
+    this.elements.friendsContainer.empty();
+    this.elements.friendsContainer.append(newHtml5);
+  }
+}
